@@ -1,0 +1,58 @@
+<ng-container *ngIf="employeeObj">
+  <mat-toolbar color="primary">
+    <span class="text-white">Welcome {{ employeeObj[0].first_name }}</span>
+    <button mat-button color="warn" (click)="logout()">Log Out</button>
+  </mat-toolbar>
+
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title class="mat-card-titl
+            
+            e bg-success text-white">Employee Details</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table class="mat-elevation-z8" [dataSource]="[employeeObj[0]]">
+              
+              <ng-container matColumnDef="first_name">
+                <th mat-header-cell *matHeaderCellDef class="table-header">First Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.first_name }}</td>
+              </ng-container>
+
+              
+              <ng-container matColumnDef="last_name">
+                <th mat-header-cell *matHeaderCellDef class="table-header">Last Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.last_name }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef class="table-header">Contact Number</th>
+                <td mat-cell *matCellDef="let element">{{ element.contact }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="dob">
+                <th mat-header-cell *matHeaderCellDef class="table-header">Date of Birth</th>
+                <td mat-cell *matCellDef="let element">{{ element.dob | date: 'mediumDate' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="table-header">Email</th>
+                <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef class="table-header">Address</th>
+                <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['first_name', 'last_name', 'contact', 'dob', 'email', 'address']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['first_name', 'last_name', 'contact', 'dob', 'email', 'address'];"></tr>
+            </table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</ng-container>

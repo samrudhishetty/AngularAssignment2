@@ -1,0 +1,42 @@
+<!-- Add the necessary imports at the top of your HTML file -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@angular/material@13.2.1/prebuilt-themes/deeppurple-amber.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!-- Update the form section of your HTML -->
+<div class="container-fluid pt-3" [formGroup]="loginForm">
+  <div class="alert alert-danger" *ngIf="IsAuthenticationFailed">
+    invalid username or password
+  </div>
+  <div class="card">
+    <h5 class="card-header">Login</h5>
+    <div class="card-body">
+      <div class="form-group mb-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="UserName" />
+        </mat-form-field>
+        <div class="alert alert-danger" [hidden]="!(loginForm.controls.UserName.dirty && loginForm.controls.UserName.errors?.['required'])">
+          Enter Username
+        </div>
+        <div class="alert alert-danger" [hidden]="!(loginForm.controls.UserName.dirty && loginForm.controls.UserName.errors?.['minlength'])">
+          Minimum 3 characters needed for Username
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput type="password" formControlName="Password" />
+        </mat-form-field>
+        <div class="alert alert-danger" [hidden]="!(loginForm.controls.Password.dirty && loginForm.controls.Password.errors?.['required'])">
+          Enter Password
+        </div>
+        <div class="alert alert-danger" [hidden]="!(loginForm.controls.Password.dirty && loginForm.controls.Password.errors?.['minlength'])">
+          Minimum 3 characters needed for Password
+        </div>
+      </div>
+      <div class="d-grid gap-2">
+        <button mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="login()">Login</button>
+      </div>
+    </div>
+  </div>
+</div>

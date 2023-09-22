@@ -1,0 +1,40 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "first_name": "Christina",
+      "last_name": "Manakkal",
+      "contact": 8108526500,
+      "email": "christy@gmail.com",
+      "dob": "2001-06-02",
+      "address": "Mumbai"
+    },
+    {
+      "id": 2,
+      "first_name": "Chris",
+      "last_name": "Murphy",
+      "contact": 9082121713,
+      "email": "chris@gmail.com",
+      "dob": "2002-07-10",
+      "address": "Andheri"
+    },
+    {
+      "id": 3,
+      "first_name": "Selena",
+      "last_name": "Gomez",
+      "contact": 1234567889,
+      "email": "selena@gmail.com",
+      "dob": "1993-09-07",
+      "address": "USA"
+    },
+    {
+      "first_name": "Taylor",
+      "last_name": "Swift",
+      "contact": 1234444444,
+      "email": "tay@gmail.com",
+      "dob": "1995-05-09",
+      "address": "USA",
+      "id": 4
+    }
+  ]
+}

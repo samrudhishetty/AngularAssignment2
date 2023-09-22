@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="app.component.css">
+  </head>
+
+  <body>
+    <ul>
+      <li><a [routerLink]="['employee']" >Employee</a></li>
+      <li><a [routerLink]="['login']" >Login</a></li>
+    </ul>
+    <div style="text-align: right; line-height: 1;">
+      <h4><span style="color: black;">Current TimeZone:</span> <span style="color: lightblue;">IST</span></h4>
+      <h4><span style="color: black;">Currency:</span> <span style="color: lightblue;">INR</span></h4>
+    </div>
+
+   
+      <router-outlet></router-outlet>
+
+      
+    
+  </body>
+</html>
