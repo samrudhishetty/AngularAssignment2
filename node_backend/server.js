@@ -2,8 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const cors = require('cors');
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken library
 const app = express();
 const PORT = 8080;
+const jwtkey = "samrudhi";
+const jwtExpirySeconds = 3000;
+
+
 
 app.use(cors())
 app.use(bodyParser.json());
@@ -53,7 +58,7 @@ app.post('/insertEmployee', (req, res) => {
     });
 });
 
-/* Selecting values from database. */
+/*values from database. */
 app.get('/selectEmployee', (req, res) => {
     const sql = 'SELECT * FROM EMPLOYEE';
     connection.query(sql, (error, result) => {
@@ -83,11 +88,14 @@ app.post('/signin', (req, res) => {
             res.status(500).json({ error: 'Error executing sign in process' });
         } else {
             console.log(result)
-            if(result.length > 0) {
-                res.status(200).json({ id: result[0].id, message: 'Employee Found!' });
-            }
-            else {
-                res.status(404).json({ error: 'Employee Not Found!'})
+            if (result.length > 0) {
+                // Generate a JWT token
+                const user = { id: result[0].id, first_name: loginUser.first_name };
+                const token = jwt.sign(user, jwtkey, { expiresIn: jwtExpirySeconds });
+                
+                res.status(200).json({ id: result[0].id, token, message: 'Employee Found!' });
+            } else {
+                res.status(404).json({ error: 'Employee Not Found!' });
             }
             console.log('Query results:', result);
             for (const row of result) {
@@ -96,6 +104,28 @@ app.post('/signin', (req, res) => {
         }
     });
 });
+//new added
+const verifyToken = (req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token) {
+        return res.status(403).json({ error: 'No token provided' });
+    }
+    jwt.verify(token, jwtkey, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ error: 'Failed to authenticate token' });
+        }
+        req.userId = decoded.id; // Store user ID in the request for later use
+        next();
+    });
+};
+
+// Example usage:
+app.get('/protectedEndpoint', verifyToken, (req, res) => {
+    // This endpoint is protected and requires a valid JWT token
+    // The user ID is available as req.userId
+    res.json({ message: 'This is a protected endpoint', userId: req.userId });
+});
+//new added
 
 /* Getting values within database to display. */
 app.get('/getEmployee/:id', (req, res) => {

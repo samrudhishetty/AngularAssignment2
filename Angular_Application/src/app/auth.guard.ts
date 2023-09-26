@@ -1,19 +1,19 @@
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from "@angular/router";
 import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, CanActivate } from "@angular/router";
+import { JwtService } from './jwt.service';
 
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
 
-@Injectable({providedIn:  'root'})
-export class AuthGuard {
-
-    constructor(private router: Router) {
+    constructor(private router: Router, private jwtService: JwtService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if(state.url === '/welcome') {
+        const token = this.jwtService.getToken();
+        if (!token) {
             this.router.navigate(['login']);
             return false;
         }
         return true;
     }
-
 }
